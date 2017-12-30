@@ -28,6 +28,3 @@ msgstr ""
 #: model:ir.model,name:partner_multi_company.model_res_users
 msgid "Users"
 msgstr "Korisnici"
-
-#~ msgid "Partner"
-#~ msgstr "Partner"
