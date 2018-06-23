@@ -29,8 +29,5 @@ msgstr ""
 msgid "Users"
 msgstr "Utilisateurs"
 
-#~ msgid "Partner"
-#~ msgstr "Partenaire"
-
 #~ msgid "Companies"
 #~ msgstr "Sociétés"
