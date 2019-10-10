@@ -16,7 +16,7 @@ class ResPartner(models.Model):
         overwriting our company_ids field desired value.
         """
         self._amend_company_id(vals)
-        return super().create(vals)
+        return super(ResPartner, self).create(vals)
 
     @api.model
     def _commercial_fields(self):
