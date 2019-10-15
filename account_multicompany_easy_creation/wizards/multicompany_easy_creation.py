@@ -250,18 +250,24 @@ class AccountMulticompanyEasyCreationWiz(models.TransientModel):
         ])
         Model = self_sudo.env[model]
         for prop in properties:
-            ref = Model.browse(int(prop.value_reference.split(',')[1]))
-            new_ref = Model.search([
-                ('company_id', '=', new_company_id),
-                (match_field, '=', ref[match_field]),
-            ])
-            if new_ref:
-                prop.copy({
-                    'company_id': new_company_id,
-                    'value_reference': '{},{}'.format(model, new_ref.id),
-                    'value_float': False,
-                    'value_integer': False,
-                })
+            # Alteração Multidados
+            # Adiciona try/except para tratar registros excluidos,
+            # porém existentes no ir.properties
+            try:
+                ref = Model.browse(int(prop.value_reference.split(',')[1]))
+                new_ref = Model.search([
+                    ('company_id', '=', new_company_id),
+                    (match_field, '=', ref[match_field]),
+                ])
+                if new_ref:
+                    prop.copy({
+                        'company_id': new_company_id,
+                        'value_reference': '{},{}'.format(model, new_ref.id),
+                        'value_float': False,
+                        'value_integer': False,
+                    })
+            except:  # noqa
+                pass
 
     def match_account(self, account_template):
         return self.sudo().env['account.account'].search([
