@@ -18,7 +18,7 @@
                         <field name="currency_id"/>
                     </group>
                     <group string="Chart Template">
-                        <field name="chart_template_id"/>
+                        <field name="chart_template_id" required="1"/>
                         <field name="accounts_code_digits"/>
                     </group>
                     <group col="1" string="Accounts">
@@ -103,6 +103,6 @@
           action="wizard_multicompany_easy_creation_action"
           parent="base.menu_users"
           sequence="180"
-          groups="base.group_no_one"/>
+          groups="base.group_system"/>
 
 </odoo>
