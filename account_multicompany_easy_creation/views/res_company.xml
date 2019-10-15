@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 
+        Desabilita o Botão de Criar no Cadastro de Empresa
+        para Forçar sempre a Criação por este Modulo.
+    -->
+
+    <record id="view_company_tree_inherited_create" model="ir.ui.view">
+        <field name="name">res.company.tree.inherited.create</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>        
+        </field>
+    </record>
+
+    <record id="view_company_form_inherited_create" model="ir.ui.view">
+        <field name="name">view_company_form_inherited.create</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

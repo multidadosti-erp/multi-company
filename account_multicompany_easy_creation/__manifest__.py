@@ -15,5 +15,6 @@
     ],
     'data': [
         'wizards/multicompany_easy_creation.xml',
+        'views/res_company.xml',
     ],
 }
