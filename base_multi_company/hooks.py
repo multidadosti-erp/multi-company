@@ -60,6 +60,7 @@ def post_init_hook(cr, rule_ref, model_name):
             INSERT INTO %s
             (%s, %s)
             SELECT id, company_id FROM %s WHERE company_id IS NOT NULL
+            ON CONFLICT DO NOTHING
         """ % (table_name, column1, column2, model._table)
         env.cr.execute(SQL)
 
