@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="inherit_view_account_journal_form">
+        <field name="name">Account template form view (with multi-company)</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <field name="company_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="company_id" position="after">
+                <field name="company_ids"
+                       groups="base.group_multi_company"
+                       widget="many2many_tags"
+                       options="{'no_create': True}"
+                       attrs="{'readonly': [('type', '=', 'partner')]}"
+                       force_save="1"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>
