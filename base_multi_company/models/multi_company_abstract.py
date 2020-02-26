@@ -15,6 +15,8 @@ class MultiCompanyAbstract(models.AbstractModel):
         compute='_compute_company_id',
         inverse='_inverse_company_id',
         search='_search_company_id',
+        store=True,
+        index=True,
     )
     company_ids = fields.Many2many(
         string='Companies',
