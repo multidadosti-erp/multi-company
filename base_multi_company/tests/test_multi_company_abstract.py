@@ -81,10 +81,13 @@ class TestMultiCompanyAbstract(common.SavepointCase):
         self.add_company(self.company_2)
         self.env.user.company_ids = [(4, self.company_2.id)]
         self.env.user.company_id = self.company_2.id
-        self.assertEqual(
-            self.record.company_id.id,
-            self.company_2.id,
-        )
+
+        # Antes ele computava a cada chamada da função e o valor do company_id poderia mudar
+        # dependendo do company_ids, agora a verificação que ele vai fazer é somente se o company_id
+        # atual não existir no company_ids que a mudança será feita, caso contrário o company_id 
+        # permanecerá o mesmo desde a criação.
+        self.assertIn(self.record.company_id.id, self.record.company_ids.ids)
+        self.assertIn(self.company_2.id, self.record.company_ids.ids)
 
     def test_inverse_company_id(self):
         """ It should add the company using company_id. """
@@ -93,14 +96,21 @@ class TestMultiCompanyAbstract(common.SavepointCase):
 
     def test_search_company_id(self):
         """ It should return correct record by searching company_id. """
+        self.assertNotIn(self.company_2.id, self.record.company_ids.ids)
         self.add_company(self.company_2)
+        self.assertIn(self.company_2.id, self.record.company_ids.ids)
+        # Neste caso ele está adicionando a empresa 2 dentro do self.record
+        # Como o company_id não será alterado, ele continuará como numero 1
+        # O search abaixo tenta buscar pelo número da conta do company_id
+        # Esse valor continua como company_id 1, mas para efeitos de testes
+        # verificaremos se o company_id 2 realmente foi adicionado.
         record = self.env['multi.company.abstract.tester'].search([
-            ('company_id.account_no', '=', self.company_2.account_no),
+            ('company_id.account_no', '=', self.company_1.account_no),
             ('id', '=', self.record.id),
         ])
         self.assertEqual(record, self.record)
         record = self.env['multi.company.abstract.tester'].search([
-            ('company_id', '=', self.company_2.id),
+            ('company_id', '=', self.company_1.id),
             ('id', '=', self.record.id),
         ])
         self.assertEqual(record, self.record)
@@ -160,10 +170,11 @@ class TestMultiCompanyAbstract(common.SavepointCase):
             # Force recompute
             tester.invalidate_cache()
             # Ensure that the current user is on the right company
+
             self.assertEqual(user.company_id, company)
-            self.assertEqual(tester.company_id, company)
+            self.assertIn(company.id, tester.company_ids.ids)
             # So can read company fields without Access error
-            self.assertTrue(bool(tester.company_id.name))
+            self.assertTrue(bool(tester.sudo().company_id.name))
         # Switch to a company not in tester.company_ids
         user.write({
             'company_ids': [(4, company4.id, False)],
