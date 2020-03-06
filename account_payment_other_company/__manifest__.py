@@ -17,6 +17,7 @@
         'views/account_payment.xml',
     ],
     'development_status': 'Beta',
+    'installable': False,
     'maintainers': [
         'max3903',
         'osi-scampbell',
