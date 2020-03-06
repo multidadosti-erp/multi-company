@@ -27,6 +27,7 @@
         'views/report_consolidated_invoice.xml',
     ],
     'application': True,
+    'installable': False,
     'development_status': 'Beta',
     'maintainers': [
         'max3903',
