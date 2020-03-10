@@ -84,7 +84,7 @@ class TestMultiCompanyAbstract(common.SavepointCase):
 
         # Antes ele computava a cada chamada da função e o valor do company_id poderia mudar
         # dependendo do company_ids, agora a verificação que ele vai fazer é somente se o company_id
-        # atual não existir no company_ids que a mudança será feita, caso contrário o company_id 
+        # atual não existir no company_ids que a mudança será feita, caso contrário o company_id
         # permanecerá o mesmo desde a criação.
         self.assertIn(self.record.company_id.id, self.record.company_ids.ids)
         self.assertIn(self.company_2.id, self.record.company_ids.ids)
