@@ -10,18 +10,29 @@ class TestModule(TransactionCase):
 
     def setUp(self):
         super(TestModule, self).setUp()
-        self.test_company = self.env.ref('res_company_active.company_test')
+
+        self.test_new_company = self.env['res.company'].create({
+            'name': 'Company Test Active Control',
+            'active': True,
+        })
+
+        self.test_new_user = self.env['res.users'].sudo().create({
+            'name': 'User Test Active Control',
+            'login': 'user_test_active_control',
+        })
+
         self.main_company = self.env.ref('base.main_company')
-        self.demo_user = self.env.ref('base.user_demo')
 
     # Test Section
     def test_01_disable_without_user(self):
-        self.test_company.active = False
+        self.assertTrue(self.test_new_company.active)
+
+        self.test_new_company.active = False
+        self.assertFalse(self.test_new_company.active)
 
     def test_02_disable_with_user(self):
-        self.demo_user.company_id = self.test_company
         with self.assertRaises(ValidationError):
-            self.test_company.active = False
+            self.test_new_user.company_id.active = False
 
     def test_03_disable_current_company(self):
         with self.assertRaises(ValidationError):
