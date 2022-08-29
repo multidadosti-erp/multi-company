@@ -13,8 +13,12 @@ class StockProductionLot(models.Model):
         return company_model._company_default_get('stock.production.lot')
 
     company_id = fields.Many2one(
-        comodel_name='res.company', string='Company', change_default=True,
-        default=_default_company_id)
+        comodel_name='res.company',
+        string='Company',
+        change_default=True,
+        index=True,
+        default=_default_company_id
+    )
 
     _sql_constraints = [
         ('name_ref_uniq',
