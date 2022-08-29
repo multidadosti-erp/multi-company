@@ -10,4 +10,5 @@ class StockMoveLine(models.Model):
         related='move_id.company_id',
         store=True,
         readonly=True,
+        index=True,
     )
