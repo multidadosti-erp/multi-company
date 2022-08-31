@@ -18,7 +18,7 @@
     ],
     'demo': [
         'demo/res_groups.xml',
-        'demo/res_company.xml',
+        # 'demo/res_company.xml',
     ],
     'installable': True,
     'images': [
