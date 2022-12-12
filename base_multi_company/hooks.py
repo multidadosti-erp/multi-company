@@ -19,6 +19,17 @@ def create_company_assignment_view(cr):
             FROM res_company;
     """)
 
+    """ Multidados: Substitui regra do Odoo """
+    with api.Environment.manage():
+        env = api.Environment(cr, SUPERUSER_ID, {})
+
+        # Força a tabela users a regra correta de consulta para multi-company
+        rule = env.ref('base.res_users_rule')
+        rule.write({
+            'domain_force': ("['|',('company_id','=',False),"
+                              "('company_ids','in',user.company_ids.ids)]"
+            ),
+        })
 
 def set_security_rule(env, rule_ref):
     """Set the condition for multi-company in the security rule.
