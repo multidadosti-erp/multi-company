@@ -10,7 +10,7 @@
     "author": "ACS0NE SA/NV, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/multi-company",
     "application": False,
-    "installable": True,
+    "installable": False,  # Não usar no MultiERP
     "depends": ["crm"],
     "data": ["views/crm_stage.xml", "security/crm_security.xml"],
     "demo": [],
