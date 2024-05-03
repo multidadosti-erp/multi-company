@@ -16,6 +16,7 @@ class StockProductionLot(models.Model):
         comodel_name='res.company',
         string='Company',
         change_default=True,
+        track_visibility='always',
         index=True,
         default=_default_company_id
     )
