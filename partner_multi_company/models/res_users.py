@@ -10,10 +10,10 @@ class ResUsers(models.Model):
     @api.model
     def create(self, vals):
         res = super(ResUsers, self).create(vals)
-        if 'company_ids' in vals:
-            res.partner_id.company_ids = vals['company_ids']
         if 'company_id' in vals:
             res.partner_id.company_ids = [(6, 0, [vals['company_id']])]
+        elif 'company_ids' in vals:
+            res.partner_id.company_ids = vals['company_ids']
         return res
 
     @api.multi
